@@ -2,7 +2,6 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
     fun parseFullName(fullName:String?):Pair<String?,String?>{
-
         if (fullName.isNullOrEmpty()) {
             return Pair(null, null)
         } else {
@@ -20,10 +19,10 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        return ""
+        TODO("not implemented")
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        return ""
+        TODO("not implemented")
     }
 }
