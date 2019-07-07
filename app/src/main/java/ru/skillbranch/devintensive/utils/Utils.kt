@@ -19,10 +19,28 @@ object Utils {
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
-        TODO("not implemented")
+        var translit = ""
+        for (char in payload) {
+            val c = char.toString().toLowerCase()
+            translit +=
+                if (char == ' ')
+                    divider
+                else if (c in translitDict) {
+                    val tchar = translitDict[c]
+                    if (char.isUpperCase())
+                        tchar?.toUpperCase()
+                    else
+                        tchar
+                } else {
+                    char
+                }
+        }
+        return translit
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        TODO("not implemented")
+        val f = firstName?.trim()?.firstOrNull()
+        val l = lastName?.trim()?.firstOrNull()
+        return if (f == null && l == null) null else "${f ?: ""}${l ?: ""}".toUpperCase()
     }
 }
