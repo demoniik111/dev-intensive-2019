@@ -30,17 +30,18 @@ fun Date.add(value:Int, units: TimeUnits = TimeUnits.SECOND) : Date {
 
 fun Date.humanizeDiff(date: Date = Date()):String {
     var toSeconds = (date.time - this.time)/1000
+    val past = toSeconds < 0
     when (toSeconds) {
         in 0..1 -> return "только что"
-        in 1..45 -> return "несколько секунд назад"
-        in 45..75 -> return "минуту назад"
-        in 75..2700 -> return "${toSeconds/60} минут назад"
-        in 2700..4500 -> return "час назад"
-        in 4500..79200 -> return "${toSeconds/3600} часов назад"
-        in 79200..93600 -> return "день назад"
-        in 93600..31104000 -> return "${toSeconds/86400} дней назад"
+        in 1..45 -> return if (past) "несколько секунд назад" else "через несколько секунд"
+        in 45..75 -> return if (past) "минуту назад" else "через минуту"
+        in 75..2700 -> return "${TimeUnits.MINUTE.plural(toSeconds.toInt()/60)} назад"
+        in 2700..4500 -> return  if (past) "час назад" else "через час"
+        in 4500..79200 -> return "${TimeUnits.HOUR.plural(toSeconds.toInt()/3600)} часов назад"
+        in 79200..93600 -> return if (past) "день назад" else "через день"
+        in 93600..31104000 -> return "${TimeUnits.DAY.plural(toSeconds.toInt()/86400)} дней назад"
         else -> {
-            return "более года назад"
+            return if (past) "более года назад" else "более чем через год"
         }
     }
 }
